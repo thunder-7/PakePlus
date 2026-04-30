@@ -155,7 +155,21 @@
         <script>
             window.onload = () => {
                 // 设置样式
-                document.body.classList.add(currentProject.desktop.pwdTheme)
+                if (currentProject.desktop.pwdTheme === 'system') {
+                    // document.body.classList.add('system')
+                    const mediaQuery = window.matchMedia(
+                        '(prefers-color-scheme: dark)'
+                    )
+                    if (mediaQuery) {
+                        const listener = (e) => {
+                            const newTheme = e.matches ? 'dark' : 'light'
+                            document.body.classList.add(newTheme)
+                        }
+                        mediaQuery.addEventListener('change', listener)
+                    }
+                } else {
+                    document.body.classList.add(currentProject.desktop.pwdTheme)
+                }
                 document.getElementById('card').classList =
                     currentProject.desktop.pwdStyle
                 // 设置标题
